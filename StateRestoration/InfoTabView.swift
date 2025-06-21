@@ -10,7 +10,7 @@ import SwiftUI
 struct InfoTabView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     
-    @ObservedObject var product: Product
+    @Bindable var product: Product
     
     // Use different width and height for info view between compact and non-compact size classes.
     var width: CGFloat {
@@ -45,7 +45,8 @@ struct InfoTabView_Previews: PreviewProvider {
 // MARK: - InfoView
 
 struct InfoView: View {
-    @ObservedObject var product: Product
+    @Bindable var product: Product
+    
     
     @Environment(\.currencyFormatter) var currencyFormatter
     @Environment(\.numberFormatter) var numberFormatter

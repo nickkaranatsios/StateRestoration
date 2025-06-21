@@ -10,8 +10,9 @@ import Foundation
 /** Note that we use an observable object class for the model,
     so that its values are globally shared, and integrate with scene storage.
 */
-class ProductsModel: Codable, ObservableObject {
-    @Published var products: [Product] = []
+@Observable
+class ProductsModel: Codable {
+    var products: [Product] = []
     
     private enum CodingKeys: String, CodingKey {
         case products

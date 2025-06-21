@@ -7,12 +7,13 @@ The data structure describing a single product.
 
 import Foundation
 
-class Product: Hashable, Identifiable, Codable, ObservableObject {
+@Observable
+class Product: Hashable, Identifiable, Codable {
     let id: UUID
     let imageName: String
-    @Published var name: String
-    @Published var year: Int
-    @Published var price: Double
+    var name: String
+    var year: Int
+    var price: Double
     
     init(identifier: UUID, name: String, imageName: String, year: Int, price: Double) {
         self.name = name

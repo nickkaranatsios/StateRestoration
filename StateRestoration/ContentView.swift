@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     // The data model for storing all the products.
-    @EnvironmentObject var productsModel: ProductsModel
+    @Environment(ProductsModel.self) private var productsModel: ProductsModel
     
     // Used for detecting when this scene is backgrounded and isn't currently visible.
     @Environment(\.scenePhase) private var scenePhase
@@ -24,9 +24,7 @@ struct ContentView: View {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(productsModel.products) { product in
-                        NavigationLink(destination: DetailView(product: product, selectedProductID: $selectedProduct),
-                                       tag: product.id.uuidString,
-                                       selection: $selectedProduct) {
+                        NavigationLink(value: product) {
                             StackItemView(itemName: product.name, imageName: product.imageName)
                         }
                         .padding(8)
@@ -51,6 +49,10 @@ struct ContentView: View {
                 .padding()
             }
             .navigationTitle("ProductsTitle")
+            .navigationDestination(for: Product.self) { product in
+                DetailView(product: product, selectedProductID: $selectedProduct)
+                    .environment(productsModel)
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
         
@@ -59,8 +61,8 @@ struct ContentView: View {
                 selectedProduct = product.id.uuidString
             }
         }
-        .onChange(of: scenePhase) { newScenePhase in
-            if newScenePhase == .background {
+        .onChange(of: scenePhase) {
+            if scenePhase == .background {
                 // Make sure to save any unsaved changes to the products model.
                 productsModel.save()
             }
@@ -70,7 +72,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(ProductsModel())
+        ContentView().environment(ProductsModel())
     }
 }
 

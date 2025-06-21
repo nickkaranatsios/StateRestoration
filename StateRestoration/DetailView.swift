@@ -10,8 +10,9 @@ import SwiftUI
 struct DetailView: View {
     // The user activity type representing this view.
     static let productUserActivityType = "com.example.apple-samplecode.staterestore.product"
+    @Environment(ProductsModel.self) private var productsModel: ProductsModel
     
-    @ObservedObject var product: Product
+    @Bindable var product: Product
     @Binding var selectedProductID: String?
     
     enum Tabs: String {
@@ -45,6 +46,7 @@ struct DetailView: View {
         
         .sheet(isPresented: $showEditView) {
             EditView(product: product)
+                .environment(productsModel)
         }
 
         .toolbar {

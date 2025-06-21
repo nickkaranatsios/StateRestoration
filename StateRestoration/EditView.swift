@@ -9,11 +9,11 @@ import SwiftUI
 
 struct EditView: View {
     // The data model for storing all the products.
-    @EnvironmentObject var productsViewModel: ProductsModel
+    @Environment(ProductsModel.self) private var productsViewModel: ProductsModel
     
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) private var presentationMode
     
-    @ObservedObject var product: Product
+    var product: Product
 
     // Whether to use product or saved values.
     @SceneStorage("EditView.useSavedValues") var useSavedValues = true
