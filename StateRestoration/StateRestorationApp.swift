@@ -12,10 +12,8 @@ struct StateRestorationApp: App {
     private var productsModel = ProductsModel()
     var body: some Scene {
         WindowGroup("Products", id: "Products.viewer") {
-            NavigationStack {
-                ContentView()
-                    .environment(productsModel)
-            }
+            ContentView()
+                .environment(productsModel)
         }
     }
 }

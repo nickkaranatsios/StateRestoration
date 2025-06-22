@@ -20,7 +20,7 @@ struct ContentView: View {
     let columns = Array(repeating: GridItem(.adaptive(minimum: 94, maximum: 120)), count: 3)
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns) {
                     ForEach(productsModel.products) { product in
@@ -54,8 +54,6 @@ struct ContentView: View {
                     .environment(productsModel)
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        
         .onContinueUserActivity(DetailView.productUserActivityType) { userActivity in
             if let product = try? userActivity.typedPayload(Product.self) {
                 selectedProduct = product.id.uuidString
